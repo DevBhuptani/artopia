@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react';
-import { Download, Share2, Sparkles, Wand2 } from 'lucide-react';
+import { Download, Sparkles, Wand2 } from 'lucide-react';
+import { mintNFT } from '../backend/integration';
 
-export function HomePage() {
+export function HomePage({ walletAddress }: any) {
   const [prompt, setPrompt] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
@@ -18,7 +19,8 @@ export function HomePage() {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'X-RapidAPI-Key': '48fdb1ce26msh4844406089f6956p1e0cfcjsn300a44b6459f',
+            'X-RapidAPI-Key':
+              '48fdb1ce26msh4844406089f6956p1e0cfcjsn300a44b6459f',
             'X-RapidAPI-Host': 'open-ai21.p.rapidapi.com',
           },
           body: JSON.stringify({ text: prompt }),
@@ -30,7 +32,6 @@ export function HomePage() {
       }
 
       const data = await response.json();
-      console.log('data', data)
       setGeneratedImage(data.generated_image);
     } catch (error: any) {
       console.error('Error generating image:', error);
@@ -107,16 +108,10 @@ export function HomePage() {
                     <button
                       className="flex items-center gap-2 bg-gray-700 hover:bg-gray-600 
                                  text-white px-4 py-2 rounded-lg transition-colors"
+                      onClick={() => mintNFT(walletAddress, generatedImage)}
                     >
                       <Download className="w-4 h-4" />
-                      Download
-                    </button>
-                    <button
-                      className="flex items-center gap-2 bg-gray-700 hover:bg-gray-600 
-                                 text-white px-4 py-2 rounded-lg transition-colors"
-                    >
-                      <Share2 className="w-4 h-4" />
-                      Share
+                      Mint NFT
                     </button>
                   </div>
                 </div>
