@@ -11,7 +11,7 @@ export async function mintNFT(recipient: string, uri: string): Promise<any> {
     const signer = provider.getSigner();
 
     const contract = new ethers.Contract(
-      '0xA2D3439762d58C198d8C02346166ebD688A91A73',
+      '0x63de8d5546656a0E3dfDD5506b65eD9e9a99B25E',
       artopiaAbi,
       signer
     );
